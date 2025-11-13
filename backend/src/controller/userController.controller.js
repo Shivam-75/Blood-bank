@@ -88,6 +88,7 @@ export const userLoginController = async (req, res) => {
         const Optionvalidation = {
             httpOnly: true,
             secure: true,
+            sameSite: "none",
             maxAge: 30 * 24 * 60 * 60 * 1000
         }
         return res.status(200)
