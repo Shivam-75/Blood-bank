@@ -19,6 +19,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://blood-bank-gk62.vercel.app",
+  "https://blood-bank-three-eta.vercel.app"
 ];
 
 app.use(
