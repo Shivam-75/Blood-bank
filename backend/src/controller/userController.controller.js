@@ -94,6 +94,7 @@ export const userLoginController = async (req, res) => {
             .cookie("AccessToken", AccessToken, {
                 httpOnly: true,
                 secure: true,
+                sameSite: "none",
                 maxAge: 15 * 60 * 1000
             })
             .cookie("RefreshToken", RefreshToken, Optionvalidation)
@@ -145,6 +146,7 @@ export const refreshToken = async (req, res) => {
         const option = {
             httpOnly: true,
             secure: true,
+            sameSite: "none",
             maxAge: 30 * 24 * 60 * 60 * 1000
         }
 
@@ -154,6 +156,7 @@ export const refreshToken = async (req, res) => {
             .cookie("AccessToken", AccessToken, {
                 httpOnly: true,
                 secure: true,
+                sameSite: "none",
                 maxAge: 15 * 60 * 1000
             })
             .cookie("RefreshToken", RefreshToken, option)
@@ -175,7 +178,8 @@ export const Logout = async (req, res) => {
 
         const option = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite: "none",
         }
         return res.status(200)
             .clearCookie("AccessToken", option)
@@ -222,7 +226,8 @@ export const deleteUserAccount = async (req, res) => {
         }
         const option = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite: "none",
 
         }
 
