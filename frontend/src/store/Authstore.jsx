@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   //? login Authentication
-  const userDataFached = async () => {
+  const userDataFached = useCallback(async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_URL}/api/v1/user/login`,
@@ -81,26 +81,35 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log(data);
-      } else {
-        console.log("login refresh");
-        //todo Toekn refresh krne ke liye yha end point hit krenge
-        if (data.err === "jwt expired") {
-          const res = await RefreshToken();
-          const data = await res.json();
-          if (res.ok) {
-            console.log("refresh", data);
-            setTokenLocalStorage(true);
-          } else {
-            console.log("error", data);
-            removerToken();
-          }
-        }
+        console.log("User login data:", data);
+        return;
       }
+
+      // If JWT expired → try refresh
+      if (data.err === "jwt expired") {
+        console.log("JWT expired, trying refresh...");
+
+        const res = await RefreshToken();
+        const refreshData = await res.json();
+
+        if (res.ok) {
+          console.log("Refresh success", refreshData);
+          setTokenLocalStorage(true);
+          userDataFached();
+        } else {
+          console.log("Refresh failed:", refreshData);
+          removerToken();
+        }
+
+        return;
+      }
+
+      // Other errors
+      console.log("Login failed:", data);
     } catch (err) {
-      throw new Error("Login Data Error", err);
+      throw new Error("Login Data Error: " + err);
     }
-  };
+  }, [isLogin]);
 
   useEffect(() => {
     userDataFached();
