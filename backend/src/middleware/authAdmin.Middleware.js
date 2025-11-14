@@ -3,13 +3,13 @@ import jwt from "jsonwebtoken";
 
 export const AdminCheckerMiddleware = async (req, res, next) => {
 
-  const { AdminAccessToken } = req.cookies || req.body;
+  const token = req.cookies?.AdminAccessToken;
   try {
 
-    if (!AdminAccessToken) {
+    if (!token) {
       return res.status(401).json({ message: "Unauthorized Access !! ", success: false });
     }
-    const UserVerify = await jwt.verify(AdminAccessToken, process.env.ADMIN_SECREAT_TOKEN)
+    const UserVerify = await jwt.verify(token, process.env.ADMIN_SECREAT_TOKEN)
 
     if (!UserVerify) {
       return res.status(401).json({ message: "Credentail Error Token Expire !!", success: false });

@@ -2,14 +2,14 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.models.js";
 
 export const AuthSecurity = async (req, res, next) => {
-    const { AccessToken } = req.cookies;
+    const token = req.cookies?.AccessToken;
 
     try {
-        if (!AccessToken) {
+        if (!token) {
             return res.status(401).json({ message: "UnAuthorize Access jwt expired", success: false });
         }
 
-        const decodeUser = jwt.verify(AccessToken, process.env.ACCESS_TOKEN_SECRET)
+        const decodeUser = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 
         if (!decodeUser) {
             return res.status(400).json({ message: "token expire", success: false });
