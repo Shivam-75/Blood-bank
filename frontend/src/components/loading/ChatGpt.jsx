@@ -168,6 +168,7 @@ const ChatGpt = () => {
         <input
           type="text"
           value={input}
+          required
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask your question about medicine..."
           className="flex-1 border border-gray-300 rounded-3xl px-4 py-2 outline-none focus:ring-2 focus:ring-red-500"
