@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         console.log("login refresh");
         //todo Toekn refresh krne ke liye yha end point hit krenge
-        if (data.erromsg === "jwt expired") {
+        if (data.err === "jwt expired") {
           const res = await RefreshToken();
           const data = await res.json();
           if (res.ok) {
@@ -93,6 +93,7 @@ export const AuthProvider = ({ children }) => {
             setTokenLocalStorage(true);
           } else {
             console.log("refresh", data);
+            removerToken();
           }
         }
       }
