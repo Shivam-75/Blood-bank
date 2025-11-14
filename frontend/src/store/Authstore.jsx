@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
             console.log("refresh", data);
             setTokenLocalStorage(true);
           } else {
-            console.log("refresh", data);
+            console.log("error", data);
             removerToken();
           }
         }
@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     userDataFached();
-  }, [loginToken]);
+  }, [isLogin]);
 
   //! admin setitem data
 
