@@ -140,7 +140,7 @@ export const refreshToken = async (req, res) => {
             return res.status(403).json({ message: "invalid refresh token !! ", success: false });
         }
 
-        if (RefreshToken !== findUserData?.refreshToken) {
+        if (RefreshToken !== findUserData.refreshToken) {
             return res.status(401).json({ message: "Refresh token is expired !!", success: false });
         }
 
