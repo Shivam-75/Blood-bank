@@ -108,6 +108,9 @@ export const AuthProvider = ({ children }) => {
 
       // Other errors
       console.log("Login failed:", data);
+      if (data.success === false) {
+        removerToken();
+      }
     } catch (err) {
       throw new Error("Login Data Error: " + err);
     }
