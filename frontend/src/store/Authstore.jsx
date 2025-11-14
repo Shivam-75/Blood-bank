@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
         console.log("User login data:", data);
         return;
       } else if (data.message == "UnAuthorize Access jwt expired") {
-        console.log("JWT expired, trying refresh...", data);
+        console.log("JWT expired, trying refresh...");
 
         const res = await RefreshToken();
         const refreshData = await res.json();
@@ -101,7 +101,6 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         removerToken();
-        console.log("shivam", data);
       }
     } catch (err) {
       throw new Error("Login Data Error: " + err);
