@@ -130,9 +130,9 @@ export const refreshToken = async (req, res) => {
     if (!token) {
         return res.status(401).json({ message: "Unauthorized Request !!", success: false });
     }
-    try {
 
-        const decodeToken = await jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+    try {
+        const decodeToken = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
 
         const findUserData = await User.findById(decodeToken._id).select("-password");
 
@@ -140,7 +140,8 @@ export const refreshToken = async (req, res) => {
             return res.status(403).json({ message: "invalid refresh token !! ", success: false });
         }
 
-        if (RefreshToken !== findUserData.refreshToken) {
+        // 🔥 FIX HERE — Correct Comparison
+        if (token !== findUserData.refreshToken) {
             return res.status(401).json({ message: "Refresh token is expired !!", success: false });
         }
 
@@ -149,7 +150,7 @@ export const refreshToken = async (req, res) => {
             secure: true,
             sameSite: "none",
             maxAge: 30 * 24 * 60 * 60 * 1000
-        }
+        };
 
         const { AccessToken, RefreshToken } = await AccessAndRefreshToekn(findUserData._id);
 
@@ -161,10 +162,18 @@ export const refreshToken = async (req, res) => {
                 maxAge: 15 * 60 * 1000
             })
             .cookie("RefreshToken", RefreshToken, option)
-            .json({ message: "Successfully refresh the tokens !!", data: { AccessToken, RefreshToken }, success: true });
+            .json({
+                message: "Successfully refresh the tokens !!",
+                data: { AccessToken, RefreshToken },
+                success: true
+            });
 
     } catch (err) {
-        return res.status(400).json({ message: "Invalid Refresh Token !!", success: false, err: err.message });
+        return res.status(400).json({
+            message: "Invalid Refresh Token !!",
+            success: false,
+            err: err.message
+        });
     }
 }
 
