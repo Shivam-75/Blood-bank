@@ -160,7 +160,7 @@ const Signup = () => {
               </div>
               <div>
                 <label className="block text-gray-700 font-semibold mb-1">
-                  Distic
+                  District
                 </label>
                 <input
                   type="text"
