@@ -125,14 +125,14 @@ export const userProfile = async (req, res) => {
 }
 
 export const refreshToken = async (req, res) => {
-    const { RefreshToken } = req.cookies;
+    const token = req.cookies?.RefreshToken;
 
-    if (!RefreshToken) {
+    if (!token) {
         return res.status(401).json({ message: "Unauthorized Request !!", success: false });
     }
     try {
 
-        const decodeToken = await jwt.verify(RefreshToken, process.env.REFRESH_TOKEN_SECRET);
+        const decodeToken = await jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
 
         const findUserData = await User.findById(decodeToken._id).select("-password");
 
