@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   //? login Authentication
-  const userDataFached = useCallback(async () => {
+  const userDataFached = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_URL}/api/v1/user/login`,
@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       throw new Error("Login Data Error", err);
     }
-  }, []);
+  };
 
   useEffect(() => {
     userDataFached();
