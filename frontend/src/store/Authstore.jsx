@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // Other errors
-      console.log("Login failed:", data);
+      console.log("Login shivam failed:", data);
       if (data.success === false) {
         removerToken();
         console.log("shivam", data.message);
